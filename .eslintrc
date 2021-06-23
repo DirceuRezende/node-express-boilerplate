@@ -4,6 +4,9 @@
     "plugins": [
       "@typescript-eslint"
     ],
+    "globals": {
+        "module": "writable"
+    },
     "extends": [
       "eslint:recommended",
       "plugin:@typescript-eslint/eslint-recommended",
