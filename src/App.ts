@@ -8,6 +8,7 @@ import db from './database/db';
 import { router } from './routes';
 import errorMiddleware from './middlewares/error-middleware';
 import notFoundMiddleware from './middlewares/not-found-middleware';
+import Logger, { stream } from './config/logger';
 
 export class App {
   private readonly app = express();
@@ -16,7 +17,7 @@ export class App {
     (process.env.NODE_ENV || 'development') === 'development';
 
   private middlewares() {
-    this.app.use(morgan('common', { skip: () => !this.dev }));
+    this.app.use(morgan('common', { skip: () => !this.dev, stream: stream }));
     this.app.use(helmet());
     this.app.use(cors());
     this.app.use(express.json());
@@ -31,16 +32,16 @@ export class App {
 
   async assertDatabaseConnection(): Promise<void> {
     return this.database.raw('select 1+1 as result').catch((err) => {
-      console.log(
+      Logger.error(
         '[Fatal] Failed to establish connection to database! Exiting...',
       );
-      console.log(err);
+      Logger.error(err);
       process.exit(1);
     });
   }
 
   public async start(): Promise<Application> {
-    //await this.assertDatabaseConnection();
+    await this.assertDatabaseConnection();
     this.middlewares();
     this.routes();
 

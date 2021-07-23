@@ -1,0 +1,26 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  pg:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=application
+    volumes:
+      - ./database-data:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+  pg_test:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=application_test
+    ports:
+      - 5433:5433
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
