@@ -46,17 +46,17 @@ const transports = [
   }),
 ];
 
-const Logger = winston.createLogger({
+const logger = winston.createLogger({
   level: level(),
   levels,
   format,
   transports,
 });
 
-export default Logger;
+export default logger;
 
 export const stream = {
   write: function (message: string): void {
-    Logger.info(message);
+    logger.info(message);
   },
 };

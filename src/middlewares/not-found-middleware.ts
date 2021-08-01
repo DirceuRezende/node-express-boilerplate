@@ -6,7 +6,7 @@ function notFoundMiddleware(
   response: Response,
   next: NextFunction,
 ) {
-  next(new NotFoundException());
+  next(new NotFoundException('Route'));
 }
 
 export default notFoundMiddleware;

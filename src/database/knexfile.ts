@@ -1,6 +1,7 @@
 import { Knex } from 'knex';
-import path from 'path';
+import dotenv from 'dotenv';
 
+dotenv.config({ path: '../../.env' });
 interface IKnexConfig {
   [key: string]: Knex.Config;
 }
@@ -15,6 +16,9 @@ const config: IKnexConfig = {
       database: process.env.DATABASE_NAME,
       port: Number(process.env.DATABASE_PORT),
     },
+    migrations: {
+      tableName: 'migrations',
+    },
   },
   test: {
     client: 'postgres',
@@ -24,6 +28,9 @@ const config: IKnexConfig = {
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME + '_test',
       port: 5433,
+    },
+    migrations: {
+      tableName: 'migrations',
     },
   },
 };

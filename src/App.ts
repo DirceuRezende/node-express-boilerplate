@@ -1,16 +1,17 @@
 import dotenv from 'dotenv';
 dotenv.config();
-import express, { Application } from 'express';
+import express, { Express } from 'express';
+import passport from './config/authentication-strategies';
 import morgan from 'morgan';
 import cors from 'cors';
 import helmet from 'helmet';
 import db from './database/db';
-import { router } from './routes';
+import UserRoutes from './routes/UserRoutes';
 import errorMiddleware from './middlewares/error-middleware';
 import notFoundMiddleware from './middlewares/not-found-middleware';
 import Logger, { stream } from './config/logger';
 
-export class App {
+export default class App {
   private readonly app = express();
   private readonly database = db;
   private readonly dev =
@@ -25,8 +26,10 @@ export class App {
   }
 
   private routes() {
-    this.app.use(router);
+    const userRoutes = new UserRoutes();
+    this.app.use('/user', userRoutes.getRoutes());
     this.app.all('*', notFoundMiddleware);
+    this.app.use(passport.initialize());
     this.app.use(errorMiddleware);
   }
 
@@ -40,7 +43,7 @@ export class App {
     });
   }
 
-  public async start(): Promise<Application> {
+  public async start(): Promise<Express> {
     await this.assertDatabaseConnection();
     this.middlewares();
     this.routes();
