@@ -29,12 +29,12 @@ export class UserService {
   }
   public async changePassword(token: string, password: string): Promise<void> {
     const id = await tokens.passwordReset.verify(token);
-    logger.error('PASSWORD' + id);
     const userRepository = new UserRepository();
     const user = await userRepository.getById(+id!);
     if (!user) {
       throw new NotFoundException('User');
     }
+    logger.info(`Changing password from ${user.id}`);
     const passwordHash = await generateHash(password);
 
     await userRepository.updatePassword(passwordHash, +id!);
@@ -73,6 +73,7 @@ export class UserService {
     if (!user) {
       throw new NotFoundException('User');
     }
+    logger.info(`Deleting user ${user.id} - ${user.email} - ${user.name}.`);
     await userRepository.delete(id);
     return {
       id: user.id,
@@ -123,6 +124,9 @@ export class UserService {
       if (user === undefined) {
         throw new NotFoundException('User');
       }
+      logger.info(
+        `Forget password from e-mail ${userEmail} and user ${user.id}`,
+      );
       const token = await tokens.passwordReset.createToken(user.id!);
       const email = new PasswordResetEmail(user.email, token);
 

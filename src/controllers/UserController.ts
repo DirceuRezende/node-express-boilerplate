@@ -25,9 +25,9 @@ export class UserController {
   async login(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const userService = new UserService();
-      const id = res.locals.user!.id;
-
-      const userTokens = await userService.login(id);
+      const user = res.locals.user as User;
+      logger.info(`Login user ${user.id} - ${user.email} - ${user.name}`);
+      const userTokens = await userService.login(user.id);
 
       res.set('Authorization', userTokens.accessToken);
       res.status(200).json({ refreshToken: userTokens.refreshToken });
@@ -40,7 +40,8 @@ export class UserController {
     try {
       const userService = new UserService();
       const token = res.locals.token;
-
+      const user = res.locals.user as User;
+      logger.info(`Logout user ${user.id} - ${user.email} - ${user.name}`);
       await userService.logout(token);
 
       res.status(204).json();
@@ -68,6 +69,7 @@ export class UserController {
     try {
       const userService = new UserService();
       const { id } = req.params;
+      logger.info(`Get user by id: ${id}`);
       const user = await userService.getById(+id);
 
       res.status(200).send(user);
@@ -84,7 +86,7 @@ export class UserController {
     try {
       const userService = new UserService();
       const user = res.locals.user as User;
-
+      logger.info(`Verify email from user ${user.id}`);
       await userService.verifyEmail(user);
 
       res.status(200).json();
@@ -97,7 +99,7 @@ export class UserController {
     try {
       const userService = new UserService();
       const { id } = req.params;
-
+      logger.info(`Delete user ${id}`);
       const deletedId = await userService.delete(+id);
 
       res.status(200).json({ id: deletedId });
@@ -118,7 +120,9 @@ export class UserController {
     try {
       const userService = new UserService();
       const { email } = req.body;
+      logger.info(`Forget password from e-mail ${email}`);
       await userService.forgetMyPassword(email);
+
       res.status(200).send(defaultResponse);
     } catch (error) {
       logger.error(error);
