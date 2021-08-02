@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import Joi, { Schema, ValidationErrorItem } from 'joi';
+import { Schema, ValidationErrorItem } from 'joi';
 import Logger from '../config/logger';
 
 export const bodyValidationMiddleware = (schema: Schema) => {

@@ -3,11 +3,11 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as BearerStrategy } from 'passport-http-bearer';
 import bcrypt from 'bcrypt';
 
-import UserRepository from '../repositories/UserRepository';
-import tokens from '../utils/tokens';
-import User from '../entities/User';
+import UserRepository from '@/repositories/UserRepository';
+import tokens from '@/utils/tokens';
+import User from '@/entities/User';
 import logger from './logger';
-import InvalidArgumentError from '../exceptions/InvalidArgumentError';
+import InvalidArgumentError from '@/exceptions/InvalidArgumentError';
 
 function verifyUser(user: User | undefined) {
   if (!user) {

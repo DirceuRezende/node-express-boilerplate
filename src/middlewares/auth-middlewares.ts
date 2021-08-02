@@ -4,7 +4,7 @@ import { NextFunction, Request, Response } from 'express';
 import UserRepository from '../repositories/UserRepository';
 import HttpException from '../exceptions/HttpException';
 import InvalidArgumentError from '../exceptions/InvalidArgumentError';
-import logger from '@config/logger';
+import logger from '@/config/logger';
 
 export function local(req: Request, res: Response, next: NextFunction): void {
   passport.authenticate('local', { session: false }, (error, user, info) => {

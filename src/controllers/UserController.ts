@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
-import logger from '../config/logger';
-import User from '../entities/User';
-import NotFoundException from '../exceptions/NotFoundException';
-import { UserService } from '../services/UserService';
+import logger from '@/config/logger';
+import User from '@/entities/User';
+import NotFoundException from '@/exceptions/NotFoundException';
+import { UserService } from '@/services/UserService';
 
 export class UserController {
   async create(req: Request, res: Response, next: NextFunction): Promise<void> {

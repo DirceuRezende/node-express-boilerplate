@@ -1,7 +1,7 @@
-import logger from '../config/logger';
-import db from '../database/db';
-import User from '../entities/User';
-import InternalServerError from '../exceptions/InternalServerError';
+import logger from '@/config/logger';
+import db from '@/database/db';
+import User from '@/entities/User';
+import InternalServerError from '@/exceptions/InternalServerError';
 
 export default class UserRepository {
   public async add(user: User): Promise<User> {

@@ -1,12 +1,11 @@
-import logger from '../config/logger';
-import User from '../entities/User';
-import InternalServerError from '../exceptions/InternalServerError';
-import InvalidArgumentError from '../exceptions/InvalidArgumentError';
-import NotFoundException from '../exceptions/NotFoundException';
-import UserRepository from '../repositories/UserRepository';
-import { PasswordResetEmail, VerificationEmail } from '../utils/emails';
-import { generateHash } from '../utils/hash';
-import tokens from '../utils/tokens';
+import logger from '@/config/logger';
+import User from '@/entities/User';
+import InternalServerError from '@/exceptions/InternalServerError';
+import NotFoundException from '@/exceptions/NotFoundException';
+import UserRepository from '@/repositories/UserRepository';
+import { PasswordResetEmail, VerificationEmail } from '@/utils/emails';
+import { generateHash } from '@/utils/hash';
+import tokens from '@/utils/tokens';
 
 type LoginReturn = {
   accessToken: string;

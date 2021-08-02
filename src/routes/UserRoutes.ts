@@ -1,8 +1,8 @@
 import express, { Router } from 'express';
-import { UserController } from '../controllers/UserController';
-import * as authMiddlewares from '../middlewares/auth-middlewares';
-import { bodyValidationMiddleware } from '../middlewares/validation-middleware';
-import { loginValidator, newUserValidator } from '../validators/UserSchema';
+import { UserController } from '@/controllers/UserController';
+import * as authMiddlewares from '@/middlewares/auth-middlewares';
+import { bodyValidationMiddleware } from '@/middlewares/validation-middleware';
+import { loginValidator, newUserValidator } from '@/validators/UserSchema';
 
 export default class UserRoutes {
   private router: Router = express.Router();
