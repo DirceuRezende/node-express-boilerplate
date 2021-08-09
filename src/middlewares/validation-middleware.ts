@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { Schema, ValidationErrorItem } from 'joi';
-import Logger from '../config/logger';
+import logger from '@/config/logger';
 
 export const bodyValidationMiddleware = (schema: Schema) => {
   return (req: Request, res: Response, next: NextFunction): void => {
@@ -13,7 +13,7 @@ export const bodyValidationMiddleware = (schema: Schema) => {
       const message = details
         .map((i: ValidationErrorItem) => i.message)
         .join(',');
-      Logger.info('error ' + message);
+      logger.info('error ' + message);
       res.status(422).json({ error: message });
     }
   };

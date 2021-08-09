@@ -9,7 +9,7 @@ import db from './database/db';
 import UserRoutes from './routes/UserRoutes';
 import errorMiddleware from './middlewares/error-middleware';
 import notFoundMiddleware from './middlewares/not-found-middleware';
-import Logger, { stream } from './config/logger';
+import logger, { stream } from './config/logger';
 
 export default class App {
   private readonly app = express();
@@ -35,10 +35,10 @@ export default class App {
 
   async assertDatabaseConnection(): Promise<void> {
     return this.database.raw('select 1+1 as result').catch((err) => {
-      Logger.error(
+      logger.error(
         '[Fatal] Failed to establish connection to database! Exiting...',
       );
-      Logger.error(err);
+      logger.error(err);
       process.exit(1);
     });
   }
